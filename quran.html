@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Islamic Knowledge App</title>
+    <style>
+        body {
+            background-image: url('freepik__upload__49987.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .content {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            margin: 10px;
+            border-radius: 10px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.6);
+            margin: 0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            padding: 10px;
+            display: inline-block;
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .verse {
+            background-color: rgba(255, 255, 255, 0.2);
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            color: white;
+        }
+
+        select {
+            padding: 5px;
+            margin-top: 10px;
+            background-color: white;
+            color: black;
+        }
+
+        label {
+            color: white;
+        }
+
+        #edition-select {
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Islam</a></li>
+            <li><a href="verses.html">Quran Verses</a></li>
+            <li><a href="home.html">Chat</a></li>
+            <li><a href="quiz.html">Quiz</a></li>
+            <li><a href="index.html#resources">Resources</a></li>
+        </ul>
+    </nav>
+    <div class="content">
+        <header>
+            <h1>Welcome to the World of Islamic Knowledge!</h1>
+        </header>
+        <main>
+            <section id="quran-verses">
+                <h2>Quran Verses</h2>
+                <label for="edition-select">Select Quran Edition:</label>
+                <select id="edition-select">
+                    <option value="">Loading editions...</option>
+                </select>
+                <div id="verse-list"></div>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; 2025 Islamic Knowledge App</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const editionSelect = document.getElementById("edition-select");
+            const verseList = document.getElementById("verse-list");
+
+            // Fetch Quran editions from the API
+            fetch("https://api.alquran.cloud/v1/edition")
+                .then(response => response.json())
+                .then(data => {
+                    editionSelect.innerHTML = '<option value="">Select Edition</option>';
+                    data.data.filter(edition => edition.format === "text").forEach(edition => {
+                        const option = document.createElement("option");
+                        option.value = edition.identifier;
+                        option.textContent = `${edition.englishName} (${edition.language})`;
+                        editionSelect.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error("Error fetching editions:", error);
+                    editionSelect.innerHTML = '<option value="">Failed to load editions</option>';
+                });
+
+            // Fetch and display Quran verses based on selected edition
+            editionSelect.addEventListener("change", () => {
+                const selectedEdition = editionSelect.value;
+                if (!selectedEdition) return;
+
+                verseList.innerHTML = "<p>Loading verses...</p>";
+
+                // Fetch Surah Al-Fatiha (Surah 1) as an example
+                fetch(`https://api.alquran.cloud/v1/surah/1/${selectedEdition}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        verseList.innerHTML = "";
+                        data.data.ayahs.forEach(ayah => {
+                            const verseDiv = document.createElement("div");
+                            verseDiv.classList.add("verse");
+                            verseDiv.innerHTML = `<p><strong>Ayah ${ayah.numberInSurah}:</strong> ${ayah.text}</p>`;
+                            verseList.appendChild(verseDiv);
+                        });
+                    })
+                    .catch(error => {
+                        console.error("Error fetching verses:", error);
+                        verseList.innerHTML = "<p>Error loading verses. Please try again later.</p>";
+                    });
+            });
+        });
+    </script>
+</body>
+</html>

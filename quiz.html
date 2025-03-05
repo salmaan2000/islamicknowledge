@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background-image: url('freepik__upload__49987.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: white;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .content {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.6);
+            margin: 0;
+        }
+
+        nav ul li {
+            margin: 0 10px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            display: inline-block;
+        }
+
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        #quiz-container {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            color: black;
+        }
+
+        header h1 {
+            color: white;
+        }
+
+        main h2, main h3 {
+            color: black;
+        }
+
+        #next-button {
+            background-color: #0084ff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        #next-button:hover {
+            background-color: #0073e6;
+        }
+
+        footer {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Islam</a></li>
+            <li><a href="verses.html">Quran Verses</a></li>
+            <li><a href="home.html">Chat</a></li>
+            <li><a href="quiz.html">Quiz</a></li>
+            <li><a href="index.html#resources">Resources</a></li>
+        </ul>
+    </nav>
+    <div class="content">
+        <header>
+            <h1>Quiz</h1>
+        </header>
+        <main>
+            <section id="quiz">
+                <h2>Quiz</h2>
+                <h3>Sample Questions:</h3>
+                <div id="quiz-container">
+                    <div id="question"></div>
+                    <div id="answers"></div>
+                    <button id="next-button">Next Question</button>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; 2025 Islamic Knowledge App</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
